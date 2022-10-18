@@ -1,0 +1,19 @@
+Sub ContaOccorrenze()
+
+Dim Ncell As Integer
+
+Dim trova As Variant
+
+'inserisci dentro trova il valore della stringa che vuoi trovare
+'ps. funziona anche con numeri, non fa distinzione tra MAIUSC e minusc
+
+trova = "Luca"
+
+'Cerca tutte le occorrenze nelle celle selezionate
+'se si vuole impostare un valore specifico inserire Range("A1:A10") al posto di Selection
+
+Ncell = Application.WorksheetFunction.CountIf(Selection, trova)
+
+MsgBox "Ci sono " & Ncell & " celle che contengono il valore : " & trova
+
+End Sub

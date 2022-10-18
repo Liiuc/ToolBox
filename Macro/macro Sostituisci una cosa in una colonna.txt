@@ -1,0 +1,6 @@
+Sub Replace()
+    'CONTROLLARE SE IL TESTO DA CAMBIARE è NELLA COLONNA B
+    Worksheets("Sheet1").Columns("B").Replace _
+    What:="en", Replacement:="en-gb", _
+    SearchOrder:=xlByColumns, MatchCase:=True
+End Sub

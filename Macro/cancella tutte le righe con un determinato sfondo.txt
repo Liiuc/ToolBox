@@ -1,0 +1,30 @@
+Sub DeleteRows()
+'Updateby Extendoffice
+    Dim rngCl As Range
+    Dim xRows As Long
+    Dim xCol As Long
+    Dim colorLg As Long
+    On Error Resume Next
+    Set rngCl = Application.InputBox _
+        (Prompt:="Select a cell with the background color to be deleted", _
+        Title:="Kutools for Excel", Type:=8)
+    On Error GoTo 0
+    If rngCl Is Nothing Then
+        MsgBox "User cancelled operation." & vbCrLf & _
+        "Processing terminated", vbInformation, "Kutools for Excel"
+        Exit Sub
+    End If
+    colorLg = rngCl.Interior.Color
+    Application.ScreenUpdating = False
+    With ActiveSheet.UsedRange
+        For xRows = .Rows.Count To 1 Step -1
+            For xCol = 1 To .Columns.Count
+                           If .Cells(xRows, xCol).Interior.Color = colorLg Then
+                    .Rows(xRows).Delete
+                    Exit For
+                End If
+            Next xCol
+        Next xRows
+    End With
+    Application.ScreenUpdating = True
+End Sub

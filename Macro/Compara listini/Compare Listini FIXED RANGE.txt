@@ -1,0 +1,58 @@
+Sub confrontaListino()
+'impostare il foglio excel come segue
+'Copiare la colonna A del listino nella colonna A di excel ed la colonna E del listino nella colonna B del file Excel (col A = Colonna degli OPT , col E = colonna del prezzo)
+'copiare la tabella dal db access di cincom e incollarla sulla colonna D
+'inserire una riga vuota prima del tutto e configurare correttamente i range delle colonne
+'l'algoritmo controllerà se il codice di un opt del listino excel è presente sul listino di cincom, se è presente confronta il prezzo tra i due listini
+'se il prezzo è uguale su entrambi i listini colora di verde la cella, altrimenti la colora di rosso
+
+
+
+    Dim NameList As Worksheet
+    Dim i As Long, j As Long
+    Dim n As Long, m As Long
+    
+    Set NameList = Excel.Worksheets("Sheet2")
+
+    Dim rngNames As Range
+    Set rngNames = Range("A1:A170") 'Colonna dove sono scritti gli optional su listini exc
+    Dim varNames As Variant
+    varNames = rngNames.Value2
+    
+    Dim rngNamesPrices As Range
+    Set rngNamesPrices = Range("B1:B170") 'Colonna prezzi su listini excel
+    Dim varNamesPrices As Variant
+    varNamesPrices = rngNamesPrices.Value2 'oppure con Value2
+
+    Dim rngData As Range
+    Set rngData = Range("F1:F144") 'Colonna optional su listini cincom
+    Dim varData As Variant
+    varData = rngData.Value2
+    
+    Dim rngDataPrices As Range
+    Set rngDataPrices = Range("G1:G144")  'Colonna optional su listini cincom
+    Dim varDataPrices As Variant
+    varDataPrices = rngDataPrices.Value2
+
+    Application.ScreenUpdating = False
+
+    For i = LBound(varNames) + 1 To UBound(varNames)
+        For j = LBound(varData) + 1 To UBound(varData)
+            If varNames(i, 1) <> "" Then
+                If InStr(1, varData(j, 1), varNames(i, 1), vbTextCompare) > 0 Then
+                    'NameList.Cells(j, 8) = "OPT TROVATO"
+                    If InStr(1, varDataPrices(j, 1), varNamesPrices(i, 1), vbBinaryCompare) > 0 Then
+                        'NameList.Cells(j, 9) = "prezzo uguale"
+                        NameList.Cells(j, 7).Interior.ColorIndex = 4   'il 7 è il numero della colonna che si vuole colorare
+                    Else
+                        'NameList.Cells(j, 9) = "prezzo diverso"
+                        NameList.Cells(j, 7).Interior.ColorIndex = 3   'il 7 è il numero della colonna che si vuole colorare
+                    End If
+                End If
+            End If
+        Next j
+    Next i
+
+    Application.ScreenUpdating = True
+
+End Sub

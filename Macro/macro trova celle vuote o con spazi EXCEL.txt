@@ -1,0 +1,27 @@
+Sub FindAllBlankCells()
+'PURPOSE:Add Zero to All Blank Cells within Selection
+
+Dim BlankCells As Range
+
+  If TypeName(Selection) <> "Range" Then Exit Sub
+
+'Optimize Code
+  Application.ScreenUpdating = False
+
+'Store all blank cells in variable
+  On Error Resume Next
+  Set BlankCells = Selection.SpecialCells(xlCellTypeBlanks)
+  On Error GoTo 0
+
+'Change the value of all blank cells
+  If Not BlankCells Is Nothing Then
+    
+    'Display Blank Cell Count
+      MsgBox "There are " & BlankCells.Count & " within cell selection."
+    
+    'Change All Blank Cell Values
+      BlankCells.Value = "Empty"
+  
+  End If
+
+End Sub

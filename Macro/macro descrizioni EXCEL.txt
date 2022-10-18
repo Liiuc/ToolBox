@@ -1,0 +1,87 @@
+Sub CopiaDescrizioni()
+ 'Seleziono la prima cella D2, prendere la cella dove si è arrivati e inserirla qui sotto
+  Range("D2352").Select
+  Dim Var As String
+  Dim contatore As Integer
+  Dim found As Boolean
+  Dim row_number As Integer
+  Dim col_number As Integer
+  Dim copiaDesc As Variant
+  
+    
+  contatore = 0
+  Var = "NULL"
+  found = False
+  cRow = 1
+  
+      ' Set Do loop to stop when an empty cell is reached.
+      Do Until IsEmpty(ActiveCell)
+          
+         If ActiveCell.Value = Var Then
+            'MsgBox "Cella con corrispondenza trovata"
+            salvariga = ActiveCell.Row
+            salvacolonna = ActiveCell.Column
+            salvacolonna = salvacolonna - 2
+            ActiveCell.Offset(0, -2).Select
+            
+            While found = False
+                
+                ActiveCell.Offset(1, 0).Select
+                contatore = contatore + 1
+                
+                If contatore > 500 Then
+                    MsgBox "nessun valore da sostituire nelle 500 righe"
+                
+                    Exit Sub
+                Else
+                    
+                End If
+                
+                
+                If ActiveCell.Value = Cells(salvariga, salvacolonna).Value Then
+                    'MsgBox "cella con corrispondenza trovata correttamente"
+                    'MsgBox Cells(salvariga, salvacolonna).Value
+                    'MsgBox ActiveCell.Value                'cella trovata correttamente
+                    'MsgBox Cells(salvariga, 4).Value        'restituisce il valore della descrizione relativa alla cell desc it
+                    
+                    If ActiveCell.Offset(0, 2).Value = Var Then
+                        found = False
+                        'se la cella è nulla continuo a cercare
+                    Else
+                        'copiatura della cella
+                        copiaDesc = ActiveCell.Offset(0, 2).Value
+                        Cells(salvariga, 4).Value = copiaDesc
+                        Cells(salvariga, 4).Interior.ColorIndex = 46
+                        'MsgBox "descrizione copiata con successo"
+                        
+                        found = True
+                        Exit Do
+                    
+                    End If
+                
+            
+                
+                   
+                    
+                Else
+                    salvariga = salvariga - 1
+                    'MsgBox "tESTINGIIII"
+                End If
+               
+            Wend
+            
+                   
+               
+         Else
+         'MsgBox "Non trovo nessuna cella a cui manchi la descrizione"
+         
+         End If
+        
+         
+         ' Step down 1 row from present location.
+         ActiveCell.Offset(1, 0).Select
+      Loop
+End Sub
+
+
+

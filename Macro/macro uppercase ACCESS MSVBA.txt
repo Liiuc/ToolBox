@@ -1,0 +1,6 @@
+
+Sub Uppercase()
+
+CurrentDb.Execute "UPDATE dbo_BW_Translation SET dbo_BW_Translation.[Text] = UCase(dbo_BW_Translation.[Text])WHERE (((dbo_BW_Translation.TxtCodeId)='SPR_OH3500'));"
+
+End Sub

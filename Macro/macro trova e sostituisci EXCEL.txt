@@ -1,0 +1,31 @@
+Sub TrovaSostituisci()
+
+'questa macro consente di effettuare un trova e sostituisci dentro il file excel
+'la varibile "fnd" si riferisce al trova
+'la variabile "rplc" si riferisce al sostituisci
+
+Dim sht As Worksheet
+Dim fnd As Variant
+Dim rplc As Variant
+Dim ReplaceCount As Long
+
+fnd = "test"
+rplc = "done"
+
+For Each sht In ActiveWorkbook.Worksheets
+
+  ReplaceCount = ReplaceCount + Application.WorksheetFunction.CountIf(sht.Cells, "*" & fnd & "*")
+
+  sht.Cells.Replace what:=fnd, Replacement:=rplc, _
+    LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, _
+    SearchFormat:=False, ReplaceFormat:=False
+    
+Next sht
+
+MsgBox "Ho finito e ho sostituito " & ReplaceCount & " celle."
+
+
+End Sub
+
+
+
